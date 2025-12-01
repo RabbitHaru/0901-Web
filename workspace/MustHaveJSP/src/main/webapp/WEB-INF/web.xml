@@ -10,7 +10,7 @@
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.xhtml</welcome-file>
+    <welcome-file>default.xhㅃtml</welcome-file>
   </welcome-file-list>
   <context-param>
   	<param-name>INIT_PARAM</param-name>
@@ -40,6 +40,11 @@
   <context-param>
   	<param-name>PAGES_PER_BLOCK</param-name>
   	<param-value>5</param-value>
+  </context-param>
+  
+  <context-param>
+  	<param-name>CHAT_ADDR</param-name>
+  	<param-value>ws://localhost:8080/MustHaveJSP</param-value>
   </context-param>
   
   <session-config>

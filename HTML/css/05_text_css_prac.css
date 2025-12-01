@@ -1,0 +1,36 @@
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 10px;
+}
+table {
+  caption-side: bottom;
+}
+caption, td{
+  text-align: right;
+}
+.color {
+  background-color: #e5f6f6;
+}
+body{
+    text-align: center;
+}
+h1 {
+    font-size: 3em;
+    color:red;
+}
+h2 {
+    font-size: 1.5em;
+    color: blue;
+}
+span {
+    color: green;
+}
+p {
+    font-size: 1.2em;
+    line-height: 2em;
+    font-weight: bold;
+}
+#clock {
+    font-size: 0.7em;
+}

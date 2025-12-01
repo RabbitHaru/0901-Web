@@ -1,0 +1,124 @@
+package chapter12;
+
+class Unit {
+	// 멤버 변수
+	String name;
+	int hp;
+	int mp;
+
+	// 생성자
+	Unit(String name, int hp, int mp) {
+		this.name = name;
+		this.hp = hp;
+		this.mp = mp;
+	}
+
+	// 메서드
+	void doMove() {
+		System.out.println(name + "이 이동속도 10으로 이동");
+	}
+
+	// 메서드
+	void printUnit() {
+		System.out.print("이름 : " + name + ", HP : " + hp + ", MP : " + mp);
+	}
+}
+
+// 상속
+// class 클래스이름 extends 상속받을 클래스{}
+// name, hp, mp와 doMove(), printUnit()
+// 메서드를 선언하지 않아도 사용할 수 있음.
+class Marine extends Unit {
+	// 멤버 변수
+	int attack;
+
+	// 자식 클래스의 생성자는 부모 클래스에 생성자가 있으면
+	// 반드시 실행해야함
+	Marine(String name, int hp, int mp, int attack) {
+//		super() : 부모클래스의 생성자를 의미
+		super(name, hp, mp);
+//		marin클래스의 멤버변수 attack를 설정
+		this.attack = attack;
+	}
+
+	void printMarine() {
+//   	부모 클래스의 메서드는 자식클래스에서 자유롭게 사용할 수 있음.
+		printUnit();
+		System.out.println(", 공격력 : " + attack);
+//   	부모 클래스의 멤버 변수는 자식클래스에서 자유롭게 사용할 수 있음.
+		System.out.println(name + " : " + hp + ", " + mp + ", " + attack);
+		System.out.println();
+	}
+}
+
+class Medic extends Unit {
+	int heal = 5;
+
+	Medic(String name, int hp, int mp, int heal) {
+//   부모에 있는 생성자를 실행하는 super()
+//   부모클래스에 생성자가 있다면 자식클래스에서 반드시 실행해야함.
+		super(name, hp, mp);
+		this.heal = heal;
+	}
+
+//	오버라이딩 : 부모클래스에 있는 doMove()의 실행 내용을
+//	변경, 추가 할때 사용
+	void doMove() {
+		System.out.println(name + "이 이동속도 8으로 이동");
+	}
+
+	void printMedic() {
+		printUnit();
+		System.out.println(", 회복력 : " + heal);
+		System.out.println();
+	}
+}
+
+//   FireBat클래스 만들기
+class FireBat extends Unit {
+	int Fire = 10;
+
+	FireBat(String name, int hp, int mp, int Fire) {
+		super(name, hp, mp);
+		this.Fire = Fire;
+	}
+
+	@Override // 오버라이드 된 메서드인 것을 표시하는 문구
+//	@Override 적어서 오버라이딩 문법에 맞는지 확인하고
+//	문법이 맞지 않으면 에러를 발생시킴
+	void doMove() {
+//		super.부모클래스의메서드 : 부모클래스의 메서드를 실행함.
+		super.doMove();
+		System.out.println("파이어뱃이 스팀팩을 사용하면 12의 이동속도로 이동합니다.");
+	}
+
+	void printFireBat() {
+		printUnit();
+		System.out.println(", 불 공격 : " + Fire);
+		System.out.println();
+	}
+}
+
+public class Ex01_MyTerran {
+
+	public static void main(String[] args) {
+		Marine unit1 = new Marine("마린", 100, 0, 5);
+		// name, hp, mp 세가지 변수는 Unit 클래스를 상속 받아 사용
+		unit1.name = "마린";
+		unit1.hp = 100;
+		unit1.mp = 0;
+		// attack 변수는 Marine 클래스에서 선언하여 사용
+		unit1.attack = 20;
+		unit1.doMove();
+		unit1.printMarine();
+
+		Medic unit2 = new Medic("메딕", 120, 100, 5);
+		// attack변수는 Marine클래스에서 선언하여 사용
+		unit2.doMove();
+		unit2.printMedic();
+
+		FireBat unit3 = new FireBat("파이어벳", 150, 0, 10);
+		unit3.doMove();
+		unit3.printFireBat();
+	}
+}

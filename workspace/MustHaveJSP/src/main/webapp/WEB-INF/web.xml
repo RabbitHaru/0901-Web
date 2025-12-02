@@ -46,6 +46,10 @@
   	<param-name>CHAT_ADDR</param-name>
   	<param-value>ws://localhost:8080/MustHaveJSP</param-value>
   </context-param>
+  <context-param>
+  	<param-name>configFile</param-name>
+  	<param-value>C:/Users/it/Documents/0901-Web/config.properties</param-value>
+  </context-param>
   
   <session-config>
   	<!-- 세션의 유지 시간 설정(분단위) -->

@@ -41,11 +41,12 @@
   	<param-name>PAGES_PER_BLOCK</param-name>
   	<param-value>5</param-value>
   </context-param>
-  
+  <!-- 웹 소켓 설정 -->
   <context-param>
   	<param-name>CHAT_ADDR</param-name>
   	<param-value>ws://localhost:8080/MustHaveJSP</param-value>
   </context-param>
+  <!-- 네이버 이메일 설정 -->
   <context-param>
   	<param-name>configFile</param-name>
   	<param-value>C:/Users/it/Documents/0901-Web/config.properties</param-value>

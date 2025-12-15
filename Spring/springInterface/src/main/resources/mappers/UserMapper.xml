@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.springinterface.mappers.UserMapper">
+
+    <resultMap id="UserResultMap" type="org.zerock.springinterface.domain.UserVO">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="nickname" column="nickname"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id="insertUser" parameterType="org.zerock.springinterface.domain.UserVO">
+        INSERT INTO users (username, password, email, nickname, created_at)
+        VALUES (#{username}, #{password}, #{email}, #{nickname}, NOW())
+    </insert>
+
+    <select id="getUserByUsernameAndPassword" resultType="org.zerock.springinterface.domain.UserVO">
+        SELECT id, username, password, email, nickname, created_at
+        FROM users
+        WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <select id="getUserByUsername" resultType="org.zerock.springinterface.domain.UserVO">
+        SELECT id, username, password, email, nickname, created_at
+        FROM users
+        WHERE username = #{username}
+    </select>
+
+    <select id="getUserByNickname" resultType="org.zerock.springinterface.domain.UserVO">
+        SELECT id, username, password, email, nickname, created_at
+        FROM users
+        WHERE nickname = #{nickname}
+    </select>
+
+    <select id="getTotalUserCount" resultType="int">
+        SELECT COUNT(*) FROM users
+    </select>
+</mapper>

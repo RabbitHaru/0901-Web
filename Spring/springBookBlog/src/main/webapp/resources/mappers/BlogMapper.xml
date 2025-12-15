@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.springbookblog.mappers.BlogMapper">
+
+    <resultMap id="BlogResultMap" type="org.zerock.springbookblog.domain.BlogVO">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="writer" column="writer"/>
+        <result property="img" column="img"/>
+        <result property="bookTitle" column="book_title"/>
+        <result property="bookAuthor" column="book_author"/>
+        <result property="bookPublisher" column="book_publisher"/>
+        <result property="bookRating" column="book_rating"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <select id="getAllBlogs" resultMap="BlogResultMap">
+        SELECT * FROM BLOG ORDER BY id DESC
+    </select>
+
+
+    <insert id="insertBlog" parameterType="org.zerock.springbookblog.domain.BlogVO">
+        INSERT INTO blog (title, content, writer, username, img, book_title, book_author, book_publisher, book_rating, created_at)
+        VALUES (#{title}, #{content}, #{writer}, #{username}, #{img}, #{bookTitle}, #{bookAuthor}, #{bookPublisher}, #{bookRating}, NOW())
+    </insert>
+
+
+    <select id="getBlogById" resultType="org.zerock.springbookblog.domain.BlogVO">
+        SELECT id, title, content, writer, username, img, book_title as bookTitle,
+               book_author as bookAuthor, book_publisher as bookPublisher,
+               book_rating as bookRating, created_at as createdAt
+        FROM blog
+        WHERE id = #{id}
+    </select>
+
+    <update id="updateBlog" parameterType="org.zerock.springbookblog.domain.BlogVO">
+        UPDATE BLOG SET
+                        title = #{title},
+                        content = #{content},
+                        img = #{img},
+                        book_title = #{bookTitle},
+                        book_author = #{bookAuthor},
+                        book_publisher = #{bookPublisher},
+                        book_rating = #{bookRating}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteBlog">
+        DELETE FROM BLOG WHERE id = #{id}
+    </delete>
+
+    <select id="getTotalBlogCount" resultType="int">
+        SELECT COUNT(*) FROM BLOG
+    </select>
+</mapper>

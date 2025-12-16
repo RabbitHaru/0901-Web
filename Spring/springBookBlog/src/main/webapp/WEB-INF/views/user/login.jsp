@@ -1,5 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%-- Flash Attribute는 param이 아니라 바로 접근 --%>
+<c:if test="${not empty error}">
+    <div class="alert error">
+        <c:choose>
+            <c:when test="${error == 'empty_fields'}">아이디와 비밀번호를 입력해주세요.</c:when>
+            <c:when test="${error == 'invalid_credentials'}">아이디 또는 비밀번호가 잘못되었습니다.</c:when>
+            <c:when test="${error == 'login_required'}">로그인이 필요한 서비스입니다.</c:when>
+        </c:choose>
+    </div>
+</c:if>
+
+<c:if test="${not empty msg}">
+    <div class="alert success">
+        <c:choose>
+            <c:when test="${msg == 'join_success'}">회원가입이 완료되었습니다. 로그인해주세요.</c:when>
+            <c:when test="${msg == 'logout_success'}">로그아웃되었습니다.</c:when>
+            <c:when test="${msg == 'login_success'}">로그인되었습니다.</c:when>
+        </c:choose>
+    </div>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>

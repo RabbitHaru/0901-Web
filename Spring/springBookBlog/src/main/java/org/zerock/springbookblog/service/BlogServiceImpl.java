@@ -69,7 +69,8 @@ public class BlogServiceImpl implements BlogService {
         dto.setId(blogVO.getId());
         dto.setTitle(blogVO.getTitle());
         dto.setContent(blogVO.getContent());
-        dto.setWriter(blogVO.getWriter());  // 여전히 username 저장
+        dto.setWriter(blogVO.getWriter());
+        dto.setUsername(blogVO.getUsername());
         dto.setImg(blogVO.getImg());
         dto.setBookTitle(blogVO.getBookTitle());
         dto.setBookAuthor(blogVO.getBookAuthor());
@@ -85,7 +86,7 @@ public class BlogServiceImpl implements BlogService {
         vo.setId(blogDTO.getId());
         vo.setTitle(blogDTO.getTitle());
         vo.setContent(blogDTO.getContent());
-        vo.setWriter(blogDTO.getWriter());  // username
+        vo.setWriter(blogDTO.getWriter());
         vo.setImg(blogDTO.getImg());
         vo.setBookTitle(blogDTO.getBookTitle());
         vo.setBookAuthor(blogDTO.getBookAuthor());

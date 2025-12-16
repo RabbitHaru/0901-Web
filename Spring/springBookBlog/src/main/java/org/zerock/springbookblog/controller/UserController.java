@@ -31,13 +31,14 @@ public class UserController {
         UserDTO user = userService.loginUser(username, password);
         if (user != null) {
             session.setAttribute("username", user.getUsername());
-            session.setAttribute("nickname", user.getNickname());  // nickname 저장
-            session.setAttribute("user", user);  // 전체 사용자 정보 저장
+            session.setAttribute("nickname", user.getNickname());
+            session.setAttribute("user", user);
             redirectAttributes.addFlashAttribute("msg", "login_success");
             return "redirect:/index.do";
         } else {
+            // addFlashAttribute 사용 (redirect 후에도 유지)
             redirectAttributes.addFlashAttribute("error", "invalid_credentials");
-            return "redirect:/login.do";
+            return "redirect:/login.do";  // redirect로 변경
         }
     }
 

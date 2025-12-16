@@ -2,5 +2,3 @@
 <footer>
     &copy; 2025 MyBlog. All rights reserved.
 </footer>
-</body>
-</html>

@@ -86,19 +86,27 @@ public class BlogController {
         blogDTO.setWriter(nickname);
         blogDTO.setUsername(username);
 
-        // 파일 업로드 처리 (기존 코드 유지)
+        // 파일 업로드 처리 (디버깅 코드 추가)
         if (imgFile != null && !imgFile.isEmpty()) {
             String uploadPath = session.getServletContext().getRealPath("/upload");
+            log.info("업로드 경로: " + uploadPath);
+
             String fileName = System.currentTimeMillis() + "_" + imgFile.getOriginalFilename();
 
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
+                boolean created = uploadDir.mkdirs();
+                log.info("업로드 디렉토리 생성: " + created);
             }
+
+            log.info("업로드 디렉토리 경로: " + uploadDir.getAbsolutePath());
+            log.info("업로드 디렉토리 존재: " + uploadDir.exists());
 
             File dest = new File(uploadDir, fileName);
             imgFile.transferTo(dest);
             blogDTO.setImg("upload/" + fileName);
+            log.info("이미지 저장 완료: " + dest.getAbsolutePath());
+            log.info("웹 접근 경로: " + blogDTO.getImg());
         }
 
         boolean success = blogService.insertBlog(blogDTO);
@@ -119,6 +127,8 @@ public class BlogController {
                            RedirectAttributes redirectAttributes) {
 
         String currentUsername = (String) session.getAttribute("username");
+        String currentNickname = (String) session.getAttribute("nickname");
+
         if (currentUsername == null) {
             redirectAttributes.addFlashAttribute("error", "login_required");
             return "redirect:/user/login.do";
@@ -131,7 +141,7 @@ public class BlogController {
         }
 
 
-        if (!blog.getUsername().equals(currentUsername)) {
+        if (!blog.getWriter().equals(currentNickname)) {
             redirectAttributes.addFlashAttribute("error", "no_permission");
             return "redirect:/blog/view.do?id=" + id;
         }
@@ -140,7 +150,7 @@ public class BlogController {
         return "blog/edit";
     }
 
-    // 6. 블로그 수정 처리 - 수정된 버전
+    // 6. 블로그 수정 처리
     @PostMapping("/edit.do")
     public String edit(
             @RequestParam("id") int id,
@@ -155,7 +165,7 @@ public class BlogController {
             RedirectAttributes redirectAttributes) throws IOException {
 
         String currentUser = (String) session.getAttribute("username");
-        String nickname = (String) session.getAttribute("nickname");
+        String currentNickname = (String) session.getAttribute("nickname");
 
         if (currentUser == null) {
             redirectAttributes.addFlashAttribute("error", "login_required");
@@ -168,8 +178,8 @@ public class BlogController {
             return "redirect:/blog/list.do";
         }
 
-        // 권한 확인: writer(닉네임)으로 비교
-        if (!existingBlog.getWriter().equals(nickname)) {
+
+        if (!existingBlog.getWriter().equals(currentNickname)) {
             redirectAttributes.addFlashAttribute("error", "no_permission");
             return "redirect:/blog/view.do?id=" + id;
         }
@@ -183,23 +193,28 @@ public class BlogController {
         blogDTO.setBookRating(bookRating);
         blogDTO.setTitle(title);
         blogDTO.setContent(content);
-        blogDTO.setWriter(nickname);
+        blogDTO.setWriter(currentNickname);
+        blogDTO.setUsername(currentUser);
 
-        // 파일 업로드 처리
+        // 파일 업로드 처리 (디버깅 코드 추가)
         if (imgFile != null && !imgFile.isEmpty()) {
             String uploadPath = session.getServletContext().getRealPath("/upload");
+            log.info("수정 - 업로드 경로: " + uploadPath);
+
             String fileName = System.currentTimeMillis() + "_" + imgFile.getOriginalFilename();
 
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
+                boolean created = uploadDir.mkdirs();
+                log.info("수정 - 업로드 디렉토리 생성: " + created);
             }
 
             File dest = new File(uploadDir, fileName);
             imgFile.transferTo(dest);
             blogDTO.setImg("upload/" + fileName);
+            log.info("수정 - 이미지 저장 완료: " + dest.getAbsolutePath());
         } else {
-            blogDTO.setImg(existingBlog.getImg()); // 기존 이미지 유지
+            blogDTO.setImg(existingBlog.getImg());
         }
 
         boolean success = blogService.updateBlog(blogDTO);
@@ -219,6 +234,8 @@ public class BlogController {
                          RedirectAttributes redirectAttributes) {
 
         String currentUser = (String) session.getAttribute("username");
+        String currentNickname = (String) session.getAttribute("nickname");
+
         if (currentUser == null) {
             redirectAttributes.addFlashAttribute("error", "login_required");
             return "redirect:/user/login.do";
@@ -230,7 +247,8 @@ public class BlogController {
             return "redirect:/blog/list.do";
         }
 
-        if (!existingBlog.getWriter().equals(currentUser)) {
+
+        if (!existingBlog.getWriter().equals(currentNickname)) {
             redirectAttributes.addFlashAttribute("error", "no_permission");
             return "redirect:/blog/view.do?id=" + id;
         }
@@ -243,4 +261,36 @@ public class BlogController {
         }
         return "redirect:/blog/list.do";
     }
+    private String getUploadPath() {
+        // 프로젝트 루트 디렉토리 기준으로 upload 폴더 생성
+        String projectPath = System.getProperty("user.dir");
+        String uploadPath = projectPath + "/src/main/webapp/upload/";
+
+        // Gradle 프로젝트 구조라면
+        // String uploadPath = projectPath + "/src/main/resources/static/upload/";
+
+        log.info("프로젝트 경로: " + projectPath);
+        log.info("업로드 경로: " + uploadPath);
+
+        return uploadPath;
+    }
+
+    // 파일 업로드 처리 부분
+//    if (imgFile != null && !imgFile.isEmpty()) {
+//        String uploadPath = getUploadPath();
+//
+//        File uploadDir = new File(uploadPath);
+//        if (!uploadDir.exists()) {
+//            uploadDir.mkdirs();
+//        }
+//
+//        String fileName = System.currentTimeMillis() + "_" +
+//                imgFile.getOriginalFilename().replaceAll("\\s+", "_");
+//
+//        File dest = new File(uploadDir, fileName);
+//        imgFile.transferTo(dest);
+//
+//        // 저장 경로: 상대경로로 저장
+//        blogDTO.setImg("upload/" + fileName);
+//    }
 }

@@ -11,16 +11,14 @@ public class QuizController {
             case 1:
                 return ResponseEntity.created(null).body("Created!");
             case 2:
-                    return ResponseEntity.badRequest().body("Bad Request!");
+                return ResponseEntity.badRequest().body("Bad Request!");
             default:
-                return ResponseEntity.ok().body("OK!");
+                return ResponseEntity.ok().body("OK");
         }
     }
-
     @PostMapping("/quiz")
     public ResponseEntity<String> quiz2(@RequestBody Code code){
-
-        switch (code.value()){
+        switch(code.value()){
             case 1:
                 return ResponseEntity.status(403).body("Forbidden!");
             default:
@@ -28,6 +26,4 @@ public class QuizController {
         }
     }
 }
-
-record Code(int value){
-}
+record Code(int value){}

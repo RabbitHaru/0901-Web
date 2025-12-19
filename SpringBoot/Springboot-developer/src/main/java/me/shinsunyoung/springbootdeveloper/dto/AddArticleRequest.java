@@ -13,10 +13,10 @@ public class AddArticleRequest {
     private String title;
     private String content;
     // DTO를 Entity로 변경하는 메서드
-    public Article toEntity() {
+    public Article toEntity(){
         return Article.builder()
-                .title(title)
-                .content(content)
+                .title(this.title)
+                .content(this.content)
                 .build();
     }
 }

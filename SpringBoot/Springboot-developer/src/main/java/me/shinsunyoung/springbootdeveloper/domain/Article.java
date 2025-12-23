@@ -2,7 +2,6 @@ package me.shinsunyoung.springbootdeveloper.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,16 +21,22 @@ public class Article {
     private String title;
     @Column(name="content", nullable = false)
     private String content;
+    @Column(name = "user_id")
+    private String userId;
+
     @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+
     @Builder
-    public Article(String title, String content){
+    public Article(String title, String content, String userId) {
         this.title = title;
         this.content = content;
+        this.userId = userId;
     }
     // title,content변경하는 메서드
     public void update(String title, String content){

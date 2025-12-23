@@ -20,6 +20,7 @@ public class UserService {
                 .email(dto.getEmail()) // email 설정
                 // 비밀번호를 BCrypt방식으로 암호화 하여 설정
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .auth("user")
                 .build();
         // DB에 계정 저장 후 id값을 반환
         return userRepository.save(user).getId();

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>블로그 글</title>
@@ -22,8 +23,12 @@
                     <section class="mb-5">
                         <textarea class="form-control h-25" rows="10" placeholder="내용" id="content" th:text="${article.content}"></textarea>
                     </section>
-                    <button th:if="${article.id}!=null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정</button>
-                    <button th:if="${article.id}!=null" type="button" id="modify-btn2" class="btn btn-primary btn-sm">수정axios</button>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <th:block th:if="${article.userId == #authentication.name}">
+                            <button th:if="${article.id}!=null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정</button>
+                            <button th:if="${article.id}!=null" type="button" id="modify-btn2" class="btn btn-primary btn-sm">수정axios</button>
+                        </th:block>
+                    </th:block>
                     <button th:if="${article.id}==null" type="button" id="create-btn" class="btn btn-primary btn-sm">등록</button>
                     <button th:if="${article.id}==null" type="button" id="create-btn2" class="btn btn-primary btn-sm">등록axios</button>
                 </article>

@@ -28,17 +28,28 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password; // 비밀번호
+    
+    @Column(name="auth")
+    private String auth; // 권한
 
     @Builder
     public User(String email, String password, String auth) {
         this.email = email;
         this.password = password;
+        this.auth = auth;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(auth.equals("admin")){
+            // ROLE_ADMIN : 관리자 권한
+            // ROLE_USER : 일반 사용자 권한
+            // ROLE_ : SpringSecurity에서 권한 설정시 붙이는 규칙
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
+                    new SimpleGrantedAuthority("ROLE_USER"));
+        }
         // 유저가 가진 권한을 반환하는 메서드
-        return List.of(new SimpleGrantedAuthority("user"));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override

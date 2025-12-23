@@ -25,6 +25,8 @@
                 onclick="location.href='/logout'">로그아웃</button>
         </th:block>
         <button sec:authorize="isAnonymous()" type="button" class="btn btn-secondary btn-sm mb-3" onclick="location.href='/login'">로그인</button>
+        <button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-danger">관리자만 보이는 버튼</button>
+        <button sec:authorize="hasRole('USER')" type="button" class="btn btn-danger">일반사용자만 보이는 버튼</button>
         <div class="row-6" th:each="item : ${articles}">
             <div class="card">
                 <div class="card-header" th:text="${item.id}"></div>

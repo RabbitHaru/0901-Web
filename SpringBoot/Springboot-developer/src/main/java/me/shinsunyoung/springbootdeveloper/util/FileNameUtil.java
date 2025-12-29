@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class FileNameUtil {
     private String originalFileName;
-    private String newfileName;
+    private String newFileName;
 }

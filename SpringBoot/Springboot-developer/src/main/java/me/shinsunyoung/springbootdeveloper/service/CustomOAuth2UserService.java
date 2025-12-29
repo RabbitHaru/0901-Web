@@ -20,7 +20,6 @@ import java.util.Map;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
 
-
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -38,13 +37,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             if(user == null){
                 // 소셜 로그인 처음 사용자인 경우
                 user = userRepository.save(User.builder()
-                        .email(nickName)
-                        .password(passwordEncoder.encode("1234"))
-                        .auth("user")
-                        .social(true)
-                        .build());
+                            .email(nickName)
+                            .password(passwordEncoder.encode("1234"))
+                            .auth("user")
+                            .social(true)
+                            .build());
             }
-            userSecurityDTO = new UserSecurityDTO(user,props);
+            userSecurityDTO = new UserSecurityDTO(user, props);
         }else if(company.equals("google")){
             // 구글 소셜 로그인 처리
         }

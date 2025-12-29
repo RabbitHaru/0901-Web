@@ -7,14 +7,13 @@ import me.shinsunyoung.springbootdeveloper.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Long save(AddUserRequest dto) {
+    public Long save(AddUserRequest dto){
         // 저장할 계정 데이터 설정
         User user = User.builder()
                 .email(dto.getEmail()) // email 설정

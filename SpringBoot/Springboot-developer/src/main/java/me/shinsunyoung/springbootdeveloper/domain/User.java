@@ -37,7 +37,7 @@ public class User {
     private boolean social;
 
     @Builder
-    public User(String email, String password, String auth, boolean social) {
+    public User(String email, String password, String auth, boolean social){
         this.email = email;
         this.password = password;
         this.auth = auth;

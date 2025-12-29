@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>블로그 글</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <div class="p-5 mb-5 text-center bg-light">
+</head>
+<body>
+    <div class="p-5 mb-5 text-center</> bg-light">
         <h1 class="mb-3">My Blog</h1>
         <h4 class="mb-3">블로그에 오신 것을 환영합니다.</h4>
     </div>
@@ -13,6 +15,7 @@
         <div class="row">
             <div class="col-lg-8">
                 <article>
+                    <!--hidden데이터에 PK를 저장-->
                     <input type="hidden" id="article-id" th:value="${article.id}">
                     <header class="mb-4">
                         <h1 class="fw-bolder mb-1" th:text="${article.title}"></h1>
@@ -21,28 +24,26 @@
                     <section class="mb-5">
                         <p class="fs-5 mb-4" th:text="${article.content}"></p>
                     </section>
-                    <th:block sec:authorize="isAuthenticated()">
-                        <th:block th:if="${article.userId == #authentication.name}">
-                            <button type="button" id="modify-btn"
+                    <section class="mb-5">
+                        <p class="fs-5 mb-4" th:each="image : ${article.images}">
+                            <img th:src="|@{/file/{fileName}(fileName=${image.uuid})}|"
+                                 th:alt="${image.fileName}"
+                                class="img-fluid"/>
+                        </p>
+                    </section>
+                    <th:block sec:authorize="isAuthenticated()" th:if="${article.userId == #authentication.name}">
+                        <button type="button" id="modify-btn"
                                 th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|"
                                 class="btn btn-primary btn-sm">수정</button>
-                            <button type="button" id="delete-btn"
-                                class="btn btn-secondary btn-sm">삭제</button>
-                            <button type="button" id="axios-delete-btn"
-                                class="btn btn-secondary btn-sm">Axios삭제</button>
-                            <button type="button" id="axios-delete-btn2"
-                                class="btn btn-secondary btn-sm">Axios삭제2</button>
-                        </th:block>
+                        <button type="button" id="delete-btn" class="btn btn-secondary btn-sm">삭제</button>
+                        <button type="button" id="axios-delete-btn" class="btn btn-secondary btn-sm">Axios삭제</button>
+                        <button type="button" id="axios-delete-btn2" class="btn btn-secondary btn-sm">Axios삭제2</button>
                     </th:block>
-
                 </article>
             </div>
         </div>
     </div>
-</head>
-<body>
-
-</body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/article.js"></script>
+</body>
 </html>

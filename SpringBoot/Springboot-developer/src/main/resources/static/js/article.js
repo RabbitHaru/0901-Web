@@ -96,13 +96,12 @@ if(createButton){
         fetch(`/api/articles`,{
             method:'POST',
             headers:{
-                // 데이터를 전송할시 반드시 설정
                 "Content-Type" : "application/json",
             },
-            // JSON.stringify, key:value로 이루어진 데이터를 JSON형식으로 변경하여 body에 저장
             body:JSON.stringify({
                 title:document.getElementById('title').value,
-                content:document.getElementById('content').value
+                content:document.getElementById('content').value,
+                files:document.getElementById('files').value
             })
         }).then(()=>{
             alert('등록이 완료되었습니다.');
@@ -114,8 +113,6 @@ const createButton2 = document.getElementById('create-btn2');
 if(createButton2){
     createButton2.addEventListener('click', async (event)=>{
         try{
-            // axios는 기본 설정이 json통신이기 때문에
-            // Content-Type, JSON.stringify 생략 가능
             await axios.post(`/api/articles`,{
                 title:document.getElementById('title').value,
                 content:document.getElementById('content').value
@@ -125,8 +122,76 @@ if(createButton2){
         }catch(error){}
     })
 }
+// 파일과 함께 업로드
+const createButton3 = document.getElementById('create-btn3');
+if(createButton3){
+    createButton3.addEventListener('click', event=>{
+        // 파일 데이터를 전송하기 위한 FormData객체 생성
+        let formData = new FormData();
+        // FormData에 title, content 데이터 저장
+        formData.append("title", document.getElementById('title').value);
+        formData.append("content", document.getElementById('content').value);
+        // 파일 데이터의 경우 list형식임으로 반복문으로 데이터를 꺼내어 저장
+        let fileInput = document.getElementById('files');
+        if(fileInput.files.length > 0){
+            for(let i=0; i<fileInput.files.length; i++){
+                formData.append('files', fileInput.files[i]);
+            }
+        }
+        fetch(`/api/articles`,{
+            method:'POST',
+            body:formData
+        }).then(()=>{
+            alert('등록이 완료되었습니다.');
+            location.replace(`/articles`);
+        })
+    })
+}
 
+const modifyButton3 = document.getElementById('modify-btn3');
+if(modifyButton3){
+    let params = new URLSearchParams(location.search);
+    let id = params.get('id');
+    modifyButton3.addEventListener('click', async(event)=>{
+        // 파일 데이터를 전송하기 위한 FormData객체 생성
+        let formData = new FormData();
+        // FormData에 title, content 데이터 저장
+        formData.append("title", document.getElementById('title').value);
+        formData.append("content", document.getElementById('content').value);
+        // 파일 데이터의 경우 list형식임으로 반복문으로 데이터를 꺼내어 저장
+        let fileInput = document.getElementById('files');
+        if(fileInput.files.length > 0){
+            for(let i=0; i<fileInput.files.length; i++){
+                formData.append('files', fileInput.files[i]);
+            }
+        }
+        try{
+            await axios.put(`/api/articles/${id}`, formData);
+            alert('수정이 완료되었습니다.');
+            location.href=`/article/${id}`; // 상세보기 화면으로 이동
+        }catch (error){
+            console.log(error);
+        }
+    })
+    document.querySelectorAll(".img-fluid").forEach(img=>{
+        img.addEventListener('click'
+        ,async (event)=>{
+            event.preventDefault();
+            event.stopPropagation();
+            if(confirm('이미지를 삭제하시겠습니까? 되돌릴 수 없습니다.')) {
+                try {
 
+                    await axios.delete(`/api/img/${id}`, {
+                      data: {uuid: event.target.dataset.src}
+                    })
+                    event.target.remove();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        })
+    })
+}
 
 
 

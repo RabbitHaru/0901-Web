@@ -41,7 +41,7 @@ public class UserSecurityDTO implements OAuth2User, UserDetails {
     public String getName() {
         return user.getEmail();
     }
-    //  UserDetails 설정 메서드 ----------------------------------------
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(user.getAuth().equals("admin")){

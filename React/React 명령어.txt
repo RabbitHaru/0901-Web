@@ -1,0 +1,8 @@
+1. React 프로젝트 생성
+npm create vite@latest --template typescript
+
+2. React 실행 명령어
+프로젝트 설치 위치에서 터미널열기
+npm run dev : 개발자 모드로 프로젝트 실행
+npm run build : 운영 환경의 프로젝트 실행파일 생성
+npm run preview : 운영 환경 실행

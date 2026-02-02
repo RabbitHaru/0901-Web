@@ -9,7 +9,7 @@ export default function RouterSetup(){
             <Route path="*" element={<NoMatch />}/>
             <Route path="/" element={<Home />}/>
             <Route path="/welcome" element={<Home title="Welcome to out site" />}/>
-            <Route path="/board/:boardId" element={<Board />} />
+            <Route path="/board/:boardid" element={<Board />} />
         </Routes>
     )
 }

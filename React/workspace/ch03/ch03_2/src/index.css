@@ -1,0 +1,14 @@
+/* @import url('https://fonts.googleapis.com/icon?family=Material+Icons'); */
+@import '@fontsource/material-icons';
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=restore_from_trash');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.material-icons {
+  font-family: 'Material Icons';
+  display: inline-block;
+}

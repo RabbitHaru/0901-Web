@@ -9,8 +9,8 @@ const Clock = () => {
   // 1. DOM을 직접 조작해야하는 경우
   // 2. 화면 갱신과 상관없이 변수를 저장해야하는 경우
   //     => 일반적인 변수의 경우 리렌더링시 매번 초기화됨
-  const text = useRef<HTMLInputElement>(null);
-  let count2 = 0; // 일반 변수는 제대로 작동하지 않음
+  const textRef = useRef<HTMLInputElement>(null);
+  let count2 = 0; // 일반 state는 제대로 작동하지 않음
   //   useEffect(()=>{ 실행 코드},[]) 컴포넌트 생성시 실행
   //   useEffect(()=>{ 실행 코드},[변수]) 변수가 변경될때 실행
   //   useEffect(()=>{ return () => 실행 코드 },[]) 컴포넌트 삭제시 실행
@@ -36,7 +36,7 @@ const Clock = () => {
     setCount(count + 1);
   };
   const handleChangeText = () => {
-    console.log(Text.current.value);
+    console.log(text.current.value);
   };
   return (
     <Div className="flex flex-col items-center justify-center h-screen text-white bg-primary">
@@ -50,7 +50,7 @@ const Clock = () => {
       </button>
       <p></p>
       <input
-        ref={text}
+        ref={textRef}
         onChange={handleChangeText}
         type="text"
         className="text-black input input-primary"

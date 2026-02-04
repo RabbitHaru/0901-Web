@@ -1,9 +1,15 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import Callback from "./pages/Callback";
-import HighOrderCallback from "./pages/HighOrderCallback";
-import Memo from "./pages/Memo";
-import UseOrCreateTest from "./pages/UseOrCreateTest";
 
+import BasicForm from "./pages/BasicForm";
+import Callback from "./pages/04_2/Callback";
+import HighOrderCallback from "./pages/04_2/HighOrderCallback";
+import Memo from "./pages/04_2/Memo";
+import UseOrCreateTest from "./pages/04_2/UseOrCreateTest";
+import ObjectState from "./pages/ObjectState";
+import WindowResizeTest from "./pages/WindowResizeTest";
+import FetchTest from "./pages/FetchTest";
+import FileDrop from "./pages/FileDrop";
+import ForwardRefTest from "./pages/ForwardRefTest";
 
 export default function App() {
   return (
@@ -13,9 +19,23 @@ export default function App() {
         <Route path="/1" element={<HighOrderCallback />} />
         <Route path="/2" element={<Memo />} />
         <Route path="/3" element={<UseOrCreateTest />} />
+        <Route path="/4" element={<BasicForm />} />
+        <Route path="/5" element={<ObjectState />} />
+        <Route path="/6" element={<WindowResizeTest />} />
+        <Route path="/7" element={<FetchTest />} />
+        <Route path="/8" element={<FileDrop />} />
+        <Route path="/9" element={<ForwardRefTest />} />
       </Routes>
-      <Link to="*">Callback</Link>◆<Link to="/1">HighOrderCallback</Link>◆
-      <Link to="/2">Memo</Link>◆<Link to="/3">UseOrCreateTest</Link>
+      <p>
+        <Link to="/4">BasicForm</Link>◆<Link to="/5">ObjectState</Link>◆
+        <Link to="/6">WindowResizeTest</Link>◆<Link to="/7">FetchTest</Link>◆
+        <Link to="/8">FileDrop</Link>◆<Link to="/9">ForwardRefTest</Link>
+        
+      </p>
+      <p>
+        <Link to="*">Callback</Link>◆<Link to="/1">HighOrderCallback</Link>◆
+        <Link to="/2">Memo</Link>◆<Link to="/3">UseOrCreateTest</Link>◆
+      </p>
     </BrowserRouter>
   );
 }

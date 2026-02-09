@@ -1,8 +1,18 @@
-export default function RequireAuth() {
-  return (
-    <section className="mt-4">
-      <h2 className="text-5xl font-bold text-center">RequireAuth</h2>
-      <div className="mt-4"></div>
-    </section>
-  )
+import { useEffect, type FC, type PropsWithChildren } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../contexts"
+
+type RequireAuthProps = {}
+
+const RequireAuth: FC<PropsWithChildren<RequireAuthProps>> = ({children}) => {
+  const {loggedUser} = useAuth()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!loggedUser) navigate("/")
+  }, [loggedUser, navigate])
+
+  return <>{children}</>
 }
+
+export default RequireAuth

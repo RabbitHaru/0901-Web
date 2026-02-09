@@ -27,7 +27,7 @@ export default function NavigationBar() {
         </RRLink>
         )}
         {loggedUser && (
-        <RRLink to="/logout" className="ml-4 mr-4">
+        <RRLink to="/logout" className="ml-4 mr-4 btn btn-sm btn-link">
           LOGOUT
         </RRLink>
         )}

@@ -7,10 +7,10 @@ import * as U from '../../utils'
 type LoginFormType = Record<'email' | 'password', string>
 const initialFormState = {email: '', password: ''}
 
-export default function SignUp() {
+export default function Login() {
   const [{email, password}, setForm] =
     useState<LoginFormType>(initialFormState)
-    const changed = useCallback(
+  const changed = useCallback(
       (key: string) => (e: ChangeEvent<HTMLInputElement>) => {
         setForm(obj => ({...obj, [key]: e.target.value}))
       },[]
@@ -20,7 +20,7 @@ export default function SignUp() {
     const {login} = useAuth()
     
     const loginAccount = useCallback(() => {
-      console.log(email, password, () => navigate('/'))
+      login(email, password, () => navigate('/'))
       }, [email, password, navigate, login])
       
       useEffect(() => {
@@ -37,7 +37,7 @@ export default function SignUp() {
       <div className="flex flex-col min-h-screen bg-gray-100 border border-gray-300 shadow-xl rounded-xl">
         <div className="flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto">
           <div className="w-full px-6 py-8 text-black bg-white rounded shadow-md">
-            <h1 className="mb-8 text-2xl text-center text-primary">Sign up</h1>
+            <h1 className="mb-8 text-2xl text-center text-primary">Login</h1>
             <input
               type="text"
               className="w-full p-3 mb-4 input input-primary"

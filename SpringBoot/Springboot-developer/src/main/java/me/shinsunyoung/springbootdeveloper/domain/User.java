@@ -36,11 +36,21 @@ public class User {
     @Column(name="social")
     private boolean social;
 
+    @Column(name="nickname", unique = true)
+    private String nickname;
+
     @Builder
-    public User(String email, String password, String auth, boolean social){
+    public User(String email, String password, String nickname, String auth, boolean social){
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
         this.auth = auth;
         this.social = social;
     }
+     public User update(String nickname){
+        this.nickname = nickname;
+
+        return this;
+     }
+
 }

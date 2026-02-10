@@ -49,7 +49,7 @@ public class TokenProvider {
                 .compact();
     }
     // 토큰의 유효성 검증 메서드(로그인이 필요한 페이지 사용시)
-    public boolean validateToken(String token){
+    public boolean validToken(String token){
         try {
             Jwts.parser()
                     // 비밀번호 설정

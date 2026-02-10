@@ -24,4 +24,14 @@ public class UserService {
         // DB에 계정 저장 후 id값을 반환
         return userRepository.save(user).getId();
     }
+
+    public User findById(Long userid){
+        return userRepository.findById(userid)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
+
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
 }

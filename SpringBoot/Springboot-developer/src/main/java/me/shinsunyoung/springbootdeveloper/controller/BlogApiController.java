@@ -23,18 +23,18 @@ public class BlogApiController {
 //  ResponseEntity<전송할데이터타입> : 응답에 여러가지 설정이 필요할 경우 사용하는 방식
     public ResponseEntity<Article> addArticle(
             // @RequestBody : post메서드로 받는 데이터의 경우 붙여야하는 어노테이션
-            @ModelAttribute AddArticleRequest request,
+            @RequestBody AddArticleRequest request,
             @ModelAttribute UploadFileDTO files,
             // @AuthenticationPrincipal : 로그인시 저장한 SpringSecurity 데이터
             @AuthenticationPrincipal UserSecurityDTO user){
         // SpringSecurity 로그인 객체에서 사용자 ID를 꺼내어 저장
         request.setUserId(user.getUsername());
         List<FileNameUtil> fileList = null;
-        if(files!=null && files.getFiles()!=null){
-            fileList = fileUtil.uploadFile(files);
-        }
+//        if(files!=null && files.getFiles()!=null){
+//            fileList = fileUtil.uploadFile(files);
+//        }
         // 클라이언트에서 받은 DTO로 서비스를 실행
-        Article savedArticle = blogService.save(request, fileList);
+        Article savedArticle = blogService.save(request, user.getUsername(), fileList);
         // 저장된 Article데이터를 클라이언트로 전송
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -63,13 +63,13 @@ public class BlogApiController {
     }
     @PutMapping("/api/articles/{id}")
     public ResponseEntity<Article> updateArticle(
-                @PathVariable("id") long id,
-                @ModelAttribute UpdateArticleRequest request){
+            @PathVariable("id") long id,
+            @ModelAttribute UpdateArticleRequest request){
         UploadFileDTO fileDTO = new UploadFileDTO();
         fileDTO.setFiles(request.getFiles());
         List<FileNameUtil> fileList = fileUtil.uploadFile(fileDTO);
         // PK는 주소창에서 변경할 데이터는 파라미터로 받아옴
-        Article updatedArticle = blogService.update(id, request, fileList);
+        Article updatedArticle = blogService.update(id, request,fileList);
         return ResponseEntity.ok()
                 .body(updatedArticle);
     }

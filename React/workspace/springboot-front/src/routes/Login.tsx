@@ -1,32 +1,33 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/member.css";
-import axios from "axios";
 import { useRef } from "react";
+import axios from "axios";
 
 export default function Login() {
-    const emailRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
-      const navigate = useNavigate();
-    const onSubmit = async (e:MouseEvent) => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const onSubmit = async (e: MouseEvent) => {
     e.preventDefault();
-    if(!emailRef.current && passwordRef.current){
-        return;
+    if (!emailRef.current && !passwordRef.current) {
+      return;
     }
     const data = {
-        username : emailRef.current?.value || "",
-        password :passwordRef.current?.value || ""
-    }
+      username: emailRef.current?.value || "",
+      password: passwordRef.current?.value || "",
+    };
     try {
-      const response = await axios.post("http://localhost:8080/api/login", data);
-      console.log(response.data);
-      localStorage.setItem("access_token",response.data["accessToken"]);
-      localStorage.setItem("user_id",response.data["userId"]);
+      const response = await axios.post(
+        "http://localhost:8080/api/login",
+        data,
+      );
+      localStorage.setItem("access_token", response.data["accessToken"]);
+      localStorage.setItem("user_id", response.data["userId"]);
       navigate("/articles");
     } catch (e) {
       console.log(e);
     }
   };
-      
   return (
     <div className="gradient-custom">
       <section className="d-flex vh-100">
@@ -53,7 +54,6 @@ export default function Login() {
                       type="email"
                       className="form-control"
                       ref={emailRef}
-                      name="username"
                     />
                   </div>
                   <div className="mb-3">
@@ -62,7 +62,6 @@ export default function Login() {
                       type="password"
                       className="form-control"
                       ref={passwordRef}
-                      name="password"
                     />
                   </div>
                   {/* <div className="mb-3">

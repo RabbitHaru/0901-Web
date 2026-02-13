@@ -34,7 +34,7 @@ public class UserApiController {
         return ResponseEntity.ok().build();
     }
     @PostMapping("/api/login")
-    public ResponseEntity<Map<String,String>> login(@RequestBody LoginUserRequest data,
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginUserRequest data,
                                         HttpServletRequest request, HttpServletResponse response){
         // 인증 정보 생성
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
@@ -50,8 +50,8 @@ public class UserApiController {
         CookieUtil.deleteCookie(request,response,"refresh_token");
         CookieUtil.addCookie(response,"refresh_token", refreshToken, (int)Duration.ofDays(14).toSeconds());
         // 리액트에 전달할 데이터 설정
-        Map<String,String> map = new HashMap<>();
-        map.put("accessToken",accessToken);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", accessToken);
         map.put("userId", user.getEmail());
 
         // 엑세스 토큰 설정 후 반환

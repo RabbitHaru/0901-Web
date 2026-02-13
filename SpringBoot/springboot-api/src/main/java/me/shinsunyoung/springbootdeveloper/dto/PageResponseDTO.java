@@ -18,8 +18,8 @@ public class PageResponseDTO<T> {
     private long totalElements;
     private List<T> dtoList;
 
-    private int page;
-    private int size;
+    private int page; // 현재 페이지
+    private int size; // 출력 개수
     private int start; // 번호 시작값
     private int end; // 번호 끝값
     private boolean prev; // 이전버튼 여부
@@ -33,7 +33,7 @@ public class PageResponseDTO<T> {
         this.page = pageRequestDTO.getPage();
         this.size = pageRequestDTO.getSize();
 
-        this.end= (int)(Math.ceil(this.page /10.0)*10);
+        this.end = (int)(Math.ceil(this.page/10.0)*10);
         this.start = this.end - 9;
         this.end = Math.min(this.end, this.totalPages);
         this.prev = this.start > 1;
